@@ -75,6 +75,7 @@ WSGI_APPLICATION = 'python_backend_challenge.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# Change based on your Database settings
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',

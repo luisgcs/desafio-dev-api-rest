@@ -18,5 +18,6 @@ urlpatterns = [
     path('deposit/', views.deposit),
     path('withdraw/', views.withdraw),
     path('suspend/<int:id>', views.suspend),
-    # path('transactions/<int:initial>/<int:final>'),
+    path('transactions/<int:id>/<str:initial>', views.rangeTransactions),
+    path('transactions/<int:id>/<str:initial>/<str:final>', views.rangeTransactions),
 ]

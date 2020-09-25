@@ -1,14 +1,16 @@
-from rest_framework.parsers import JSONParser
-from django.http import HttpResponse, JsonResponse, Http404
+from django.http import Http404, HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Person, Account, Transactions
-from .serializers import PersonSerializer, AccountSerializer, TransactionsSerializer
+from rest_framework.parsers import JSONParser
+
+from .models import Account, Person, Transactions
+from .serializers import (AccountSerializer, PersonSerializer, TransactionsSerializer)
+
+
 # Create your views here.
 def index(request):
     return HttpResponse("Hello World!")
 
-#This method encompasses the 4 main CRUD operations for the person table.
+# This method encompasses the 4 main CRUD operations for the person table.
 @csrf_exempt
 def personCRUD(request):
     if request.method == 'GET':
@@ -54,7 +56,7 @@ def personCRUD(request):
     else:
         return HttpResponse(status=405)
 
-#This method encompasses the 4 main CRUD operations for the account table.
+# This method encompasses the 4 main CRUD operations for the account table.
 @csrf_exempt
 def accountCRUD(request):
     if request.method == 'GET':
@@ -100,19 +102,19 @@ def accountCRUD(request):
     else:
         return HttpResponse(status=405)
 
-#This method encompasses the 4 main CRUD operations for the transaction table.
+# This method encompasses the 4 main CRUD operations for the transaction table.
 @csrf_exempt
-def transactionCRUD(request):
+def transactionCRUD(request, id=None):
     if request.method == 'GET':
         if(request.GET.get('id', None) is not None):
             try:
-                transaction = Account.objects.get(id=request.GET.get('id', None))
+                transaction = Transactions.objects.get(id=request.GET.get('id', None))
                 serializer = TransactionsSerializer(transaction, many=False)
                 return JsonResponse(serializer.data, safe=False)
-            except Account.DoesNotExist:
+            except Transactions.DoesNotExist:
                 raise Http404("Não existe nenhuma conta com este ID")
         else:
-            transactions = Account.objects.all()
+            transactions = Transactions.objects.all()
             serializer = TransactionsSerializer(transactions, many=True)
             return JsonResponse(serializer.data, safe=False)
     elif request.method == 'POST':
@@ -125,22 +127,22 @@ def transactionCRUD(request):
     elif request.method == 'PUT':
         if(request.GET.get('id', None) is not None):
             try:
-                transaction = Account.objects.get(id=request.GET.get('id', None))
+                transaction = Transactions.objects.get(id=request.GET.get('id', None))
                 data = JSONParser().parse(request)
                 serializer = TransactionsSerializer(transaction, data=data)
                 if(serializer.is_valid()):
                     serializer.save()
                     return JsonResponse(serializer.data)
                 return JsonResponse(serializer.errors, status=400)
-            except Account.DoesNotExist:
+            except Transactions.DoesNotExist:
                 raise Http404("Não existe nenhuma conta com este ID")
         return HttpResponse(status=422)
     elif request.method == 'DELETE':
         if(request.GET.get('id', None) is not None):
             try:
-                Account.objects.get(id=request.GET.get('id', None)).delete()
+                Transactions.objects.get(id=request.GET.get('id', None)).delete()
                 return HttpResponse(status=204)
-            except Account.DoesNotExist:
+            except Transactions.DoesNotExist:
                 raise Http404("Não existe nenhuma conta com este ID")
         return HttpResponse(status=422)
     else:
@@ -201,6 +203,29 @@ def suspend(request, id):
                 return JsonResponse(serializer.data, safe=False)
             except Account.DoesNotExist:
                 raise Http404("Não existe nenhuma conta com este ID")
+        return HttpResponse(status=422)
+    else:
+        return HttpResponse(status=405)
+
+@csrf_exempt
+def rangeTransactions(request, id, initial, final=None):
+    if request.method == 'GET':
+        if(id is not None and initial is not None):
+            if(final is None):
+                try:
+                    transactions = Transactions.objects.filter(idConta=id, dataTransacao__gte=initial)
+                    print(transactions)
+                    serializer = TransactionsSerializer(transactions, many=True)
+                    return JsonResponse(serializer.data, safe=False)
+                except Transactions.DoesNotExist:
+                    raise Http404("Não existe nenhuma transação neste período")
+            else:
+                try:
+                    transactions = Transactions.objects.filter(idConta=id, dataTransacao__gte=initial, dataTransacao__lte=final)
+                    serializer = TransactionsSerializer(transactions, many=True)
+                    return JsonResponse(serializer.data, safe=False)
+                except Transactions.DoesNotExist:
+                    raise Http404("Não existe nenhuma transação neste período")
         return HttpResponse(status=422)
     else:
         return HttpResponse(status=405)

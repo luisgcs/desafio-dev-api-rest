@@ -1,5 +1,0 @@
-[client]
-database = python_backend_challenge
-user = root
-password = 
-default-character-set = utf8
