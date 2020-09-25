@@ -1,28 +1,59 @@
-# Adonis API application
+# Desafio Backend Dock
 
-This is the boilerplate for creating an API server in AdonisJs, it comes pre-configured with.
+## Instalação
 
-1. Bodyparser
-2. Authentication
-3. CORS
-4. Lucid ORM
-5. Migrations and seeds
-
-## Setup
-
-Use the adonis command to install the blueprint
+Para iniciar o projeto primeiro faça o clone e entre na pasta
 
 ```bash
-adonis new yardstick --api-only
+git clone https://github.com/luisgcs/desafio-dev-api-rest
+cd desafio-dev-api-rest/node-backend-challenge
 ```
 
-or manually clone the repo and then run `npm install`.
+Após isso é necessário instalar os arquivos do AdonisJS, para isso é necessário ter NPM ou Yarn instalados
 
+```bash
+npm install
+```
 
-### Migrations
+ou 
 
-Run the following command to run startup migrations.
+```bash
+yarn install
+```
 
-```js
+## Configurando banco de dados
+
+Finalizado isto, é preciso que você configure as variáveis de ambiente que estão no arquivo ".env"
+
+```.env
+DB_CONNECTION=sqlite
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=
+DB_DATABASE=adonis
+```
+
+Também é necessário que configure o arquivo <b>config/database.js</b> preenchendo com as informações do banco
+
+Configurado os arquivos agora é hora de criar o banco
+
+MySQL e PostgreSQL:
+```sql
+create database nome_do_banco character set utf8;
+```
+
+Criado o banco, iremos criar as tabelas com suas respectivas relações
+
+```bash
 adonis migration:run
+```
+
+
+## Inicialização
+
+Feito todos passos anteriores, agora é apenas inicializar o servidor
+
+```bash
+adonis serve
 ```
