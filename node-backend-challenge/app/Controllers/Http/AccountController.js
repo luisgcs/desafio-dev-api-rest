@@ -1,8 +1,12 @@
 'use strict'
 
+const Account = require('../../Models/Account');
+
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
+
+const account = use('App/Models/Account');
 
 /**
  * Resourceful controller for interacting with accounts
@@ -17,19 +21,9 @@ class AccountController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
-  }
-
-  /**
-   * Render a form to be used for creating a new account.
-   * GET accounts/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async index({ request, response, view }) {
+    const accounts = await Account.all();
+    return accounts;
   }
 
   /**
@@ -40,7 +34,11 @@ class AccountController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store({ request, response }) {
+    const data = request.only(['idPessoa', 'saldo', 'limiteSaqueDiario', 'flagAtivo', 'tipoConta']);
+    const account = await Account.create({...data});
+
+    return account; 
   }
 
   /**
@@ -52,19 +50,9 @@ class AccountController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
-  }
-
-  /**
-   * Render a form to update an existing account.
-   * GET accounts/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
+  async show({ params, request, response, view }) {
+    const account = await Account.findOrFail(params.id);
+    return account;
   }
 
   /**
@@ -75,7 +63,14 @@ class AccountController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update({ params, request, response }) {
+    const account = await Account.findOrFail(params.id);
+    const data = request.only(['idPessoa', 'saldo', 'limiteSaqueDiario', 'flagAtivo', 'tipoConta']);
+    
+    account.merge(data);
+    await account.save();
+    
+    return account
   }
 
   /**
@@ -86,7 +81,9 @@ class AccountController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
+  async destroy({ params, request, response }) {
+    const account = await Account.findOrFail(params.id);
+    await account.delete();
   }
 }
 

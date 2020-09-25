@@ -17,5 +17,9 @@
 const Route = use('Route')
 
 Route.get('/', () => {
-  return { greeting: 'Hello world in JSON' }
+  return { message: 'Hello world!' }
 })
+
+Route.resource('account', 'AccountController').apiOnly()
+Route.resource('transaction', 'TransactionController').apiOnly()
+Route.resource('user', 'UserController').apiOnly()
