@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import Person, Account, Transactions
 
-# Register your models here.
+admin.autodiscover()
+admin.site.register(Person)
+admin.site.register(Account)
+admin.site.register(Transactions)
