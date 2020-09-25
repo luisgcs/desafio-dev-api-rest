@@ -49,6 +49,12 @@ Criado o banco, iremos criar as tabelas com suas respectivas relações
 adonis migration:run
 ```
 
+Agora iremos popular as tabelas com "dummy data"
+
+```bash
+adonis seed
+```
+
 
 ## Inicialização
 

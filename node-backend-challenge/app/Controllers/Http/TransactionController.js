@@ -8,18 +8,15 @@
  * Resourceful controller for interacting with transactions
  */
 const Transaction = use("App/Models/Transaction")
+const Account = use("App/Models/Account")
 
 class TransactionController {
   /**
    * Show a list of all transactions.
    * GET transactions
    *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
+  async index () {
     const transactions = await Transaction.all();
     return transactions;
   }
@@ -29,26 +26,22 @@ class TransactionController {
    * POST transactions
    *
    * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
+   * @param {Request} ctx.request 
    */
-  async store ({ request, response }) {
+  async store ({ request }) {
     const data = request.only(['idConta', 'valor', 'dataTransacao']);
     const transaction = await Transaction.create({...data});
 
-    return transaction; 
+    return transaction;
   }
 
   /**
    * Display a single transaction.
    * GET transactions/:id
    *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
+   * @param {object} ctx 
    */
-  async show ({ params, request, response, view }) {
+  async show ({ params }) {
     const transaction = await Transaction.findOrFail(params.id);
     return transaction;
   }
@@ -59,9 +52,8 @@ class TransactionController {
    *
    * @param {object} ctx
    * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update ({ params, request }) {
     const transaction = await Transaction.findOrFail(params.id);
     const data = request.only(['idConta', 'valor', 'dataTransacao']);
     
@@ -75,11 +67,9 @@ class TransactionController {
    * Delete a transaction with id.
    * DELETE transactions/:id
    *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
+   * @param {object} ctx 
    */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params }) {
     const transaction = await Transaction.findOrFail(params.id);
     await transaction.delete();
   }

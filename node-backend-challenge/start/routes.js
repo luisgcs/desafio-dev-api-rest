@@ -22,4 +22,8 @@ Route.get('/', () => {
 
 Route.resource('account', 'AccountController').apiOnly()
 Route.resource('transaction', 'TransactionController').apiOnly()
+Route.post('deposit', 'TransactionController.deposit')
+Route.get('balance/:id', 'AccountController.balance')
+Route.get('transactions/:id', 'AccountController.transactions')
+Route.post('withdraw', 'AccountController.withdraw')
 Route.resource('user', 'UserController').apiOnly()

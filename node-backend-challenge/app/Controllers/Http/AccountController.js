@@ -1,12 +1,13 @@
 'use strict'
 
-const Account = require('../../Models/Account');
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-const account = use('App/Models/Account');
+const Database = use("Database")
+const Account = use("App/Models/Account")
+const Transaction = use("App/Models/Transaction")
 
 /**
  * Resourceful controller for interacting with accounts
@@ -15,13 +16,8 @@ class AccountController {
   /**
    * Show a list of all accounts.
    * GET accounts
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async index({ request, response, view }) {
+  async index() {
     const accounts = await Account.all();
     return accounts;
   }
@@ -32,9 +28,8 @@ class AccountController {
    *
    * @param {object} ctx
    * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
-  async store({ request, response }) {
+  async store({ request }) {
     const data = request.only(['idPessoa', 'saldo', 'limiteSaqueDiario', 'flagAtivo', 'tipoConta']);
     const account = await Account.create({...data});
 
@@ -46,11 +41,8 @@ class AccountController {
    * GET accounts/:id
    *
    * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {
+  async show({ params }) {
     const account = await Account.findOrFail(params.id);
     return account;
   }
@@ -61,9 +53,8 @@ class AccountController {
    *
    * @param {object} ctx
    * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {
+  async update({ params, request }) {
     const account = await Account.findOrFail(params.id);
     const data = request.only(['idPessoa', 'saldo', 'limiteSaqueDiario', 'flagAtivo', 'tipoConta']);
     
@@ -78,10 +69,8 @@ class AccountController {
    * DELETE accounts/:id
    *
    * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
-  async destroy({ params, request, response }) {
+  async destroy({ params }) {
     const account = await Account.findOrFail(params.id);
     await account.delete();
   }
