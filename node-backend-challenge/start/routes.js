@@ -22,8 +22,9 @@ Route.get('/', () => {
 
 Route.resource('account', 'AccountController').apiOnly()
 Route.resource('transaction', 'TransactionController').apiOnly()
-Route.post('deposit', 'TransactionController.deposit')
-Route.get('balance/:id', 'AccountController.balance')
-Route.get('transactions/:id', 'AccountController.transactions')
-Route.post('withdraw', 'AccountController.withdraw')
+Route.post('deposit', 'OperationController.deposit')
+Route.get('balance/:id', 'OperationController.balance')
+Route.get('transactions/:id', 'OperationController.transactions')
+Route.post('withdraw', 'OperationController.withdraw')
+Route.post('suspend/:id', 'OperationController.suspend/:id')
 Route.resource('user', 'UserController').apiOnly()

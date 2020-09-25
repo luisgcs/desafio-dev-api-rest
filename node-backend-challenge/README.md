@@ -63,3 +63,13 @@ Feito todos passos anteriores, agora é apenas inicializar o servidor
 ```bash
 adonis serve
 ```
+
+
+## TODO
+
+- :heavy_check_mark: Implementar path que realiza a criação de uma conta
+- :heavy_check_mark: Implementar path que realiza operação de depósito emuma conta
+- :heavy_check_mark: Implementar path que realiza operação de consulta de saldo em determinada conta
+- :heavy_check_mark: Implementar path que realiza operação de saque em uma conta
+- :heavy_check_mark: Implementar path que realiza o bloqueio de uma conta
+- :heavy_check_mark: Implementar path que recupera o extrato de transações de uma conta
