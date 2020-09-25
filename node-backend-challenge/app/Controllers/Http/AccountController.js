@@ -18,7 +18,8 @@ class AccountController {
    * GET accounts
    */
   async index() {
-    const accounts = await Account.all();
+    // const transactions = await Database.from('transactions').where("idConta", params.id)
+    const accounts = await Database.from('accounts').where("flagAtivo", 1);
     return accounts;
   }
 

@@ -7,8 +7,8 @@
 /**
  * Resourceful controller for interacting with transactions
  */
+const Database = use("Database")
 const Transaction = use("App/Models/Transaction")
-const Account = use("App/Models/Account")
 
 class TransactionController {
   /**

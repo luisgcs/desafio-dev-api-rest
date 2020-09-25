@@ -1,7 +1,8 @@
 'use strict'
 
-const Account = require('../../Models/Account');
 const Database = use("Database")
+const Account = use("App/Models/Account")
+const Transaction = use("App/Models/Transaction")
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
