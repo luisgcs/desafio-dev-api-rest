@@ -59,15 +59,6 @@ Feito todos passos anteriores, agora é apenas inicializar o servidor
 python manage.py runserver
 ```
 
-## TODO
-
-- :heavy_check_mark: Implementar path que realiza a criação de uma conta
-- :heavy_check_mark: Implementar path que realiza operação de depósito emuma conta
-- :heavy_check_mark: Implementar path que realiza operação de consulta de saldo em determinada conta
-- :heavy_check_mark: Implementar path que realiza operação de saque em uma conta
-- :heavy_check_mark: Implementar path que realiza o bloqueio de uma conta
-- :heavy_check_mark: Implementar path que recupera o extrato de transações de uma conta
-
 ## Rotas
 
 <b>Pessoa</b>
@@ -101,3 +92,12 @@ GET suspend/<int:id>
 GET rangeTransactions/<int:id>/<int:dataInicial>
 GET rangeTransactions/<int:id>/<int:dataInicial>/<int:dataFinal>
 ```
+
+## TODO
+
+- :heavy_check_mark: Implementar path que realiza a criação de uma conta
+- :heavy_check_mark: Implementar path que realiza operação de depósito emuma conta
+- :heavy_check_mark: Implementar path que realiza operação de consulta de saldo em determinada conta
+- :heavy_check_mark: Implementar path que realiza operação de saque em uma conta
+- :heavy_check_mark: Implementar path que realiza o bloqueio de uma conta
+- :heavy_check_mark: Implementar path que recupera o extrato de transações de uma conta
