@@ -2,6 +2,7 @@ from django.http import Http404, HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 
+import json
 from .models import Account, Person, Transactions
 from .serializers import (AccountSerializer, PersonSerializer, TransactionsSerializer)
 
@@ -12,11 +13,11 @@ def index(request):
 
 # This method encompasses the 4 main CRUD operations for the person table.
 @csrf_exempt
-def personCRUD(request):
+def personCRUD(request, id=None):
     if request.method == 'GET':
-        if(request.GET.get('id', None) is not None):
+        if(id is not None):
             try:
-                client = Person.objects.get(id=request.GET.get('id', None))
+                client = Person.objects.get(id=id)
                 serializer = PersonSerializer(client, many=False)
                 return JsonResponse(serializer.data, safe=False)
             except Person.DoesNotExist:
@@ -33,9 +34,9 @@ def personCRUD(request):
             return JsonResponse(serializer.data, status=201)
         return JsonResponse(serializer.errors, status=400)
     elif request.method == 'PUT':
-        if(request.GET.get('id', None) is not None):
+        if(id is not None):
             try:
-                client = Person.objects.get(id=request.GET.get('id', None))
+                client = Person.objects.get(id=id)
                 data = JSONParser().parse(request)
                 serializer = PersonSerializer(client, data=data)
                 if(serializer.is_valid()):
@@ -46,9 +47,9 @@ def personCRUD(request):
                 raise Http404("Não existe nenhum usuário com este ID")
         return HttpResponse(status=422)
     elif request.method == 'DELETE':
-        if(request.GET.get('id', None) is not None):
+        if(id is not None):
             try:
-                Person.objects.get(id=request.GET.get('id', None)).delete()
+                Person.objects.get(id=id).delete()
                 return HttpResponse(status=204)
             except Person.DoesNotExist:
                 raise Http404("Não existe nenhum usuário com este ID")
@@ -58,11 +59,11 @@ def personCRUD(request):
 
 # This method encompasses the 4 main CRUD operations for the account table.
 @csrf_exempt
-def accountCRUD(request):
+def accountCRUD(request, id=None):
     if request.method == 'GET':
-        if(request.GET.get('id', None) is not None):
+        if(id is not None):
             try:
-                account = Account.objects.get(id=request.GET.get('id', None))
+                account = Account.objects.get(id=id)
                 serializer = AccountSerializer(account, many=False)
                 return JsonResponse(serializer.data, safe=False)
             except Account.DoesNotExist:
@@ -79,9 +80,9 @@ def accountCRUD(request):
             return JsonResponse(serializer.data, status=201)
         return JsonResponse(serializer.errors, status=400)
     elif request.method == 'PUT':
-        if(request.GET.get('id', None) is not None):
+        if(id is not None):
             try:
-                account = Account.objects.get(id=request.GET.get('id', None))
+                account = Account.objects.get(id=id)
                 data = JSONParser().parse(request)
                 serializer = AccountSerializer(account, data=data)
                 if(serializer.is_valid()):
@@ -92,9 +93,9 @@ def accountCRUD(request):
                 raise Http404("Não existe nenhuma conta com este ID")
         return HttpResponse(status=422)
     elif request.method == 'DELETE':
-        if(request.GET.get('id', None) is not None):
+        if(id is not None):
             try:
-                Account.objects.get(id=request.GET.get('id', None)).delete()
+                Account.objects.get(id=id).delete()
                 return HttpResponse(status=204)
             except Account.DoesNotExist:
                 raise Http404("Não existe nenhuma conta com este ID")
@@ -106,9 +107,9 @@ def accountCRUD(request):
 @csrf_exempt
 def transactionCRUD(request, id=None):
     if request.method == 'GET':
-        if(request.GET.get('id', None) is not None):
+        if(id is not None):
             try:
-                transaction = Transactions.objects.get(id=request.GET.get('id', None))
+                transaction = Transactions.objects.get(id=id)
                 serializer = TransactionsSerializer(transaction, many=False)
                 return JsonResponse(serializer.data, safe=False)
             except Transactions.DoesNotExist:
@@ -125,9 +126,9 @@ def transactionCRUD(request, id=None):
             return JsonResponse(serializer.data, status=201)
         return JsonResponse(serializer.errors, status=400)
     elif request.method == 'PUT':
-        if(request.GET.get('id', None) is not None):
+        if(id is not None):
             try:
-                transaction = Transactions.objects.get(id=request.GET.get('id', None))
+                transaction = Transactions.objects.get(id=id)
                 data = JSONParser().parse(request)
                 serializer = TransactionsSerializer(transaction, data=data)
                 if(serializer.is_valid()):
@@ -138,9 +139,9 @@ def transactionCRUD(request, id=None):
                 raise Http404("Não existe nenhuma conta com este ID")
         return HttpResponse(status=422)
     elif request.method == 'DELETE':
-        if(request.GET.get('id', None) is not None):
+        if(id is not None):
             try:
-                Transactions.objects.get(id=request.GET.get('id', None)).delete()
+                Transactions.objects.get(id=id).delete()
                 return HttpResponse(status=204)
             except Transactions.DoesNotExist:
                 raise Http404("Não existe nenhuma conta com este ID")
