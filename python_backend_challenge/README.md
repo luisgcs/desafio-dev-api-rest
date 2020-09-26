@@ -12,7 +12,7 @@ cd desafio-dev-api-rest/python-backend-challenge
 Após isso é necessário instalar os pacotes do Django e outras dependências, para isso é necessário ter o Python instalado
 
 ```bash
-pip install Django mysqlclient djangorestframework
+pip install Django mysqlclient djangorestframework django-seed
 ```
 
 ## Configurando banco de dados
@@ -48,7 +48,7 @@ python manage.py migrate
 Agora iremos popular as tabelas com "dummy data"
 
 ```bash
-adonis seed
+python manage.py seed account_management_api --number=5
 ```
 
 ## Inicialização
@@ -67,3 +67,37 @@ python manage.py runserver
 - :heavy_check_mark: Implementar path que realiza operação de saque em uma conta
 - :heavy_check_mark: Implementar path que realiza o bloqueio de uma conta
 - :heavy_check_mark: Implementar path que recupera o extrato de transações de uma conta
+
+## Rotas
+
+<b>Pessoa</b>
+```
+GET person/
+POST person/
+PUT person/<int:id>
+DELETE person/<int:id>
+```
+<b>Conta</b>
+```
+GET account/
+POST account/
+PUT account/<int:id>
+DELETE account/<int:id>
+```
+<b>Transação</b>
+```
+GET transaction/
+POST transaction/
+PUT transaction/<int:id>
+DELETE transaction/<int:id>
+```
+
+<b>Outros</b>
+```
+GET balance/
+POST deposit/
+POST withdraw/
+GET suspend/<int:id>
+GET rangeTransactions/<int:id>/<int:dataInicial>
+GET rangeTransactions/<int:id>/<int:dataInicial>/<int:dataFinal>
+```
